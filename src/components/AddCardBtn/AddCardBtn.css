@@ -1,0 +1,15 @@
+.add__card__btn {
+	width: 60px;
+	height: 60px;
+	background: #4caf50;
+	border-radius: 50%;
+	border: 0;
+	cursor: pointer;
+	outline: none;
+	color: #434343;
+	font-size: 38px;
+	transition: transform .5s;
+}
+.add__card__btn:hover {
+	transform: scale(1.1);
+}
