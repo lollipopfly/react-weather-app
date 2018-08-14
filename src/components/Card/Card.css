@@ -1,0 +1,55 @@
+.city__list__item {
+	width: 33.33333333%;
+	float: left;
+	margin-bottom: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
+	box-sizing: border-box;
+}
+.city__list__item__inner {
+	padding: 20px;
+	border-radius: 5px;
+	background: green;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.city__list__item__top {
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+.city__list__item__name {
+	font-weight: 500;
+	font-size: 20px;
+	float: left;
+	width: 70%;
+}
+
+.city__list__item__bottom {
+	overflow: hidden;
+}
+.city__list__item__degree__outer {
+	width: 50%;
+	display: inline-block;
+}
+.city__list__item__degree {
+	position: relative;
+	display: inline;
+	font-size: 35px;
+}
+.city__list__item__degree__icon {
+	position: absolute;
+	top: 7px;
+	right: -14px;
+	width: 7px;
+	height: 7px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+}
+.city__list__item__time {
+	display: inline-block;
+	width: 50%;
+	color: #cdcdcd;
+	text-align: right;
+	vertical-align: bottom;
+}
