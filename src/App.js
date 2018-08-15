@@ -2,8 +2,46 @@ import React, { Component } from "react";
 import Card from "./components/Card";
 import AddCardBtn from "./components/AddCardBtn";
 import "./App.css";
+import axios from "axios";
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.getLocation();
+	}
+
+	getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(this.getWeather);
+		} else {
+			console.log("Geolocation is not supported by this browser.");
+		}
+	}
+
+	getWeather(position) {
+		let lat = position.coords.latitude;
+		let lon = position.coords.longitude;
+
+		let apiKey = "a173498d2790019f6d3cc67d5b5acd0e";
+		let apiUrl =
+			"https://api.openweathermap.org/data/2.5/weather?lat=" +
+			lat +
+			"&lon=" +
+			lon +
+			"&appid=" +
+			apiKey;
+
+		axios
+			.get(apiUrl)
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+
+			});
+	}
+
 	render() {
 		return (
 			<div>
