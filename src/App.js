@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Card from "./components/Card";
 import AddCardBtn from "./components/AddCardBtn";
 import "./App.css";
@@ -8,38 +9,71 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.getLocation();
-	}
+		this.getCurrentLocationWeather = this.getCurrentLocationWeather.bind(this);
+		this.currentLocationCardAdded = this.currentLocationCardAdded.bind(this);
+		this.changeCurrentLocationStatus = this.changeCurrentLocationStatus.bind(this);
 
-	getLocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(this.getWeather);
-		} else {
-			console.log("Geolocation is not supported by this browser.");
+		// Sync current location status
+		this.changeCurrentLocationStatus();
+
+		let isCurrentLocation = this.props.isCurrentLocationExists;
+
+		if (!isCurrentLocation) {
+			// Get location access if current location doesn't exists
+			this.getCurrentLocation();
 		}
 	}
 
-	getWeather(position) {
+	getCurrentLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(this.getCurrentLocationWeather);
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
+
+	getCurrentLocationWeather(position) {
+		let self = this;
 		let lat = position.coords.latitude;
 		let lon = position.coords.longitude;
-
 		let apiKey = "a173498d2790019f6d3cc67d5b5acd0e";
-		let apiUrl =
-			"https://api.openweathermap.org/data/2.5/weather?lat=" +
-			lat +
-			"&lon=" +
-			lon +
-			"&appid=" +
-			apiKey;
+		let apiUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 		axios
-			.get(apiUrl)
-			.then((response) => {
-				console.log(response);
+			.get(apiUrl, {
+				params: {
+					lat: lat,
+					lon: lon,
+					units: "numeric",
+					appid: apiKey
+				}
 			})
-			.catch((error) => {
+			.then(response => {
+				let card = response.data;
+				card.isCurrentLocation = true;
 
-			});
+				// Save to store
+				self.currentLocationCardAdded(card);
+			})
+			.catch(error => {});
+	}
+
+	currentLocationCardAdded(card) {
+		this.props.onCurrentLocationCardAdded(card);
+	}
+
+	changeCurrentLocationStatus() {
+		let status = false;
+		let cards = this.props.cards;
+
+		for (let i in cards) {
+			if (cards[i].isCurrentLocation) {
+				status = true;
+				break;
+			}
+		}
+
+		this.props.onChangeCurrentLocationStatus(status);
 	}
 
 	render() {
@@ -51,15 +85,11 @@ class App extends Component {
 
 				<main>
 					<div className="main__inner">
-						<div className="city__list">
-							<Card />
-							<Card />
-							<Card />
-							<Card />
-							<Card />
-							<Card />
-							<Card />
-						</div>
+						{this.props.cards.length > 0 ? (
+							<div className="city__list">{this.props.cards.map((card, i) => <Card key={i} card={card} />)}</div>
+						) : (
+							<div className="empty__message">No cards yet.</div>
+						)}
 					</div>
 				</main>
 
@@ -71,4 +101,17 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default connect(
+	state => ({
+		cards: state.cards,
+		isCurrentLocationExists: state.isCurrentLocationExists
+	}),
+	dispatch => ({
+		onCurrentLocationCardAdded: card => {
+			dispatch({ type: "ADD_CURRENT_LOCATION_CARD", payload: card });
+		},
+		onChangeCurrentLocationStatus: status => {
+			dispatch({ type: "CHANGE_CURRENT_LOCATION_EXISTS_STATUS", payload: status });
+		}
+	})
+)(App);

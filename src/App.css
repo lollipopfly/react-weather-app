@@ -31,6 +31,9 @@ main {
 	font-size: 25px;
 	font-weight: 700;
 }
+.empty__message {
+	padding: 0 15px;
+}
 
 footer {
 	text-align: right;
