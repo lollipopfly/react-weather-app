@@ -5,7 +5,6 @@ import AddCardBtn from "./components/AddCardBtn";
 import "./App.css";
 import axios from "axios";
 import Modal from './components/Modal';
-
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -37,16 +36,14 @@ class App extends Component {
 		let self = this;
 		let lat = position.coords.latitude;
 		let lon = position.coords.longitude;
-		let apiKey = "a173498d2790019f6d3cc67d5b5acd0e";
-		let apiUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 		axios
-			.get(apiUrl, {
+			.get(process.env.REACT_APP_API_URL, {
 				params: {
 					lat: lat,
 					lon: lon,
 					units: "numeric",
-					appid: apiKey
+					appid: process.env.REACT_APP_API_KEY
 				}
 			})
 			.then(response => {
@@ -108,8 +105,8 @@ class App extends Component {
 
 export default connect(
 	state => ({
-		cards: state.cards,
-		isCurrentLocationExists: state.isCurrentLocationExists,
+		cards: state.cards.cards,
+		isCurrentLocationExists: state.cards.isCurrentLocationExists,
 	}),
 	dispatch => ({
 		onCurrentLocationCardAdded: card => {
