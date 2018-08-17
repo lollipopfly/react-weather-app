@@ -57,18 +57,16 @@ class Modal extends React.Component {
 
 	getCityWeather(lat, lon) {
 		let self = this;
-		let apiKey = "a173498d2790019f6d3cc67d5b5acd0e";
-		let apiUrl = "https://api.openweathermap.org/data/2.5/weather";
 		let preloader = document.querySelector(".lds-dual-ring");
 		preloader.classList.add("active");
 
 		axios
-			.get(apiUrl, {
+			.get(process.env.REACT_APP_API_URL, {
 				params: {
 					lat: lat,
 					lon: lon,
 					units: "numeric",
-					appid: apiKey
+					appid: process.env.REACT_APP_API_KEY
 				}
 			})
 			.then(response => {
@@ -149,8 +147,8 @@ class Modal extends React.Component {
 
 export default connect(
 	state => ({
-		cards: state.cards,
-		toggleModal: state.toggleModal
+		cards: state.cards.cards,
+		toggleModal: state.modal.toggleModal
 	}),
 	dispatch => ({
 		onToggleModal: () => {
