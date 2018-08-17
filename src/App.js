@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import AddCardBtn from "./components/AddCardBtn";
 import "./App.css";
 import axios from "axios";
+import Modal from './components/Modal';
 
 class App extends Component {
 	constructor(props) {
@@ -58,10 +59,6 @@ class App extends Component {
 			.catch(error => {});
 	}
 
-	currentLocationCardAdded(card) {
-		this.props.onCurrentLocationCardAdded(card);
-	}
-
 	changeCurrentLocationStatus() {
 		let status = false;
 		let cards = this.props.cards;
@@ -74,6 +71,10 @@ class App extends Component {
 		}
 
 		this.props.onChangeCurrentLocationStatus(status);
+	}
+
+	currentLocationCardAdded(card) {
+		this.props.onCurrentLocationCardAdded(card);
 	}
 
 	render() {
@@ -94,8 +95,12 @@ class App extends Component {
 				</main>
 
 				<footer>
-					<AddCardBtn />
+					<div className="footer__inner">
+						<AddCardBtn />
+					</div>
 				</footer>
+
+				<Modal />
 			</div>
 		);
 	}
@@ -104,7 +109,7 @@ class App extends Component {
 export default connect(
 	state => ({
 		cards: state.cards,
-		isCurrentLocationExists: state.isCurrentLocationExists
+		isCurrentLocationExists: state.isCurrentLocationExists,
 	}),
 	dispatch => ({
 		onCurrentLocationCardAdded: card => {
@@ -112,6 +117,6 @@ export default connect(
 		},
 		onChangeCurrentLocationStatus: status => {
 			dispatch({ type: "CHANGE_CURRENT_LOCATION_EXISTS_STATUS", payload: status });
-		}
+		},
 	})
 )(App);

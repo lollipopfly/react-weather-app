@@ -16,6 +16,8 @@
   "devDependencies": {
     "axios": "^0.18.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "rodal": "^1.6.3",
+    "teleport-autocomplete": "^0.3.3"
   }
 }
