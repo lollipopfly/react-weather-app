@@ -2,7 +2,8 @@ let storageCards = JSON.parse(localStorage.getItem("cards"));
 
 let initialState = {
 	cards: storageCards ? storageCards : [],
-	isCurrentLocationExists: false
+	isCurrentLocationExists: false,
+	toggleModal: true,
 };
 
 export default function reducer(state = initialState, action) {
@@ -23,6 +24,15 @@ export default function reducer(state = initialState, action) {
 				cards: [...state.cards, action.payload]
 			};
 		case "ADD_CARD":
+			let cardsList = JSON.parse(localStorage.getItem("cards"));
+
+			if (!cardsList) {
+				cardsList = [];
+			}
+			cardsList.push(action.payload);
+
+			localStorage.setItem("cards", JSON.stringify(cardsList));
+
 			return {
 				...state,
 				cards: [...state.cards, action.payload]
@@ -31,6 +41,11 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				isCurrentLocationExists: action.payload
+			};
+		case "TOGGLE_MODAL":
+			return {
+				...state,
+				toggleModal: !state.toggleModal
 			};
 		default:
 			return state;
