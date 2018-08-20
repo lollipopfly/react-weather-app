@@ -1,4 +1,6 @@
 .add__card__btn {
+	position: relative;
+	right: -80px;
 	width: 60px;
 	height: 60px;
 	background: #4caf50;

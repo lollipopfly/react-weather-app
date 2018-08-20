@@ -65,7 +65,7 @@ class Modal extends React.Component {
 				params: {
 					lat: lat,
 					lon: lon,
-					units: "numeric",
+					units: "metric",
 					appid: process.env.REACT_APP_API_KEY
 				}
 			})
@@ -91,6 +91,7 @@ class Modal extends React.Component {
 	onInputChange(e) {
 		let input = document.querySelector(".custom__modal__typeahead");
 
+		// TODO: use e.currentTarget - best practice (need to save it)
 		if (e.target.value && input.classList.contains("error")) {
 			this.removeInputError();
 		}

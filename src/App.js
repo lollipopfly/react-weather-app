@@ -42,7 +42,7 @@ class App extends Component {
 				params: {
 					lat: lat,
 					lon: lon,
-					units: "numeric",
+					units: "metric",
 					appid: process.env.REACT_APP_API_KEY
 				}
 			})
