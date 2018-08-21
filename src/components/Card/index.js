@@ -1,13 +1,17 @@
 import * as React from "react";
+import {connect} from 'react-redux';
 import tzlookup from "tz-lookup";
+import moment from "moment-timezone";
+
+import { DataSet } from "../../helpers/weather";
 import "./Card.css";
 import "weather-icons/css/weather-icons.css";
-import { DataSet } from "../../helpers/weather";
-import moment from "moment-timezone";
 
 class Card extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.handleClick = this.handleClick.bind(this);
 
 		let iconKey = this.props.card.weather[0].icon;
 		let date = new Date();
@@ -15,38 +19,40 @@ class Card extends React.Component {
 		let mt = moment(date);
 		let time = mt.tz(tz).format("HH:mm");
 
-		this.state = {
-			time: time,
-			icon: DataSet[iconKey].class,
-			colorClass: DataSet[iconKey].colorClass,
-			name: this.props.card.name,
-			temp: this.props.card.main.temp,
-			windPeed: this.props.card.wind.speed + "m/s"
-		};
+		this.props.card.colorClass = DataSet[iconKey].colorClass;
+		this.props.card.time = time;
+		this.props.card.icon = DataSet[iconKey].class;
+	}
+
+	handleClick() {
+		this.props.onRemoveCard(this.props.id);
 	}
 
 	render() {
 		return (
 			<div className="city__list__item">
-				<div className={"city__list__item__inner " + this.state.colorClass}>
+				<div className={"city__list__item__inner " + this.props.card.colorClass}>
+
+					<button className="city__list__item__close" onClick={this.handleClick}></button>
+
 					<div className="city__list__item__top">
-						<div className="city__list__item__name">{this.state.name}</div>
-						<i className={"city__list__item__icon wi " + this.state.icon} />
+						<div className="city__list__item__name">{this.props.card.name}</div>
+						<i className={"city__list__item__icon wi " + this.props.card.icon} />
 					</div>
 
 					<div className="city__list__item__bottom">
 						<div className="city__list__item__degree__outer">
 							<div className="city__list__item__degree">
-								{this.state.temp}
+								{this.props.card.main.temp}
 								<span className="city__list__item__degree__icon" />
 							</div>
 							<div className="city__list__item__wind">
 								<i className="wi wi-strong-wind" />
-								{this.state.windPeed}
+								{this.props.card.wind.speed + " m/s"}
 							</div>
 						</div>
 
-						<div className="city__list__item__time">{this.state.time}</div>
+						<div className="city__list__item__time">{this.props.card.time}</div>
 					</div>
 				</div>
 			</div>
@@ -54,4 +60,11 @@ class Card extends React.Component {
 	}
 }
 
-export default Card;
+export default connect(
+	state => ({}),
+	dispatch => ({
+		onRemoveCard: id => {
+			dispatch({ type: "REMOVE_CARD", payload: id });
+		},
+	})
+)(Card);

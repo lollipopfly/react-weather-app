@@ -36,6 +36,15 @@ export default function cards(state = initialState, action) {
 				...state,
 				cards: [...state.cards, action.payload]
 			};
+		case "REMOVE_CARD":
+			let newCards = state.cards.filter((item, key) => key !== action.payload);
+
+			localStorage.setItem("cards", JSON.stringify(newCards));
+
+			return {
+				...state,
+				cards: newCards
+			}
 		case "CHANGE_CURRENT_LOCATION_EXISTS_STATUS":
 			return {
 				...state,
