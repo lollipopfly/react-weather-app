@@ -7,10 +7,10 @@
 	box-sizing: border-box;
 }
 .city__list__item__inner {
-	padding: 20px;
+	position: relative;
+	padding: 25px 20px;
 	border-radius: 5px;
 	box-sizing: border-box;
-	cursor: pointer;
 }
 .city__list__item__inner.sunny {
 	background: #f5be25;
@@ -31,6 +31,60 @@
 	background: #dbdbdb;
 	color: #333;
 }
+
+/* Close button */
+.city__list__item__close {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	cursor: pointer;
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	overflow: hidden;
+	opacity: 0;
+	transition: opacity .3s;
+	outline: none;
+	background: none;
+	border: 0;
+}
+.city__list__item__inner:hover .city__list__item__close {
+	opacity: 1;
+}
+.city__list__item__close::before,
+.city__list__item__close::after {
+	content: '';
+	position: absolute;
+	height: 2px;
+	width: 100%;
+	top: 50%;
+	left: 0;
+	margin-top: -1px;
+	background: #fff;
+}
+.city__list__item__inner.fogy .city__list__item__close:before,
+.city__list__item__inner.fogy .city__list__item__close:after {
+	background: #333;
+}
+.city__list__item__close::before {
+	transform: rotate(45deg);
+}
+.city__list__item__close::after {
+	transform: rotate(-45deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

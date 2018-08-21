@@ -84,9 +84,9 @@ class App extends Component {
 				<main>
 					<div className="main__inner">
 						{this.props.cards.length > 0 ? (
-							<div className="city__list">{this.props.cards.map((card, i) => <Card key={i} card={card} />)}</div>
+							<div className="city__list">{this.props.cards.map((card, i) => <Card key={i} id={i} card={card} />)}</div>
 						) : (
-							<div className="empty__message">No cards yet.</div>
+							<div className="empty__message">No cities yet.</div>
 						)}
 					</div>
 				</main>
