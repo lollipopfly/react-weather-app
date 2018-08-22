@@ -7,30 +7,13 @@ body {
 
 header {
 	padding-top: 30px;
-	padding-bottom: 10px;
 	margin: 0 auto 70px;
 }
-header,
-main,
-.footer__inner {
-	width: 1200px;
-	padding-left: 15px;
-	padding-right: 15px;
-}
+
 main {
 	position: relative;
-	z-index: 2;
 	margin: 0 auto 100px;
 	overflow: hidden;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.main__inner {
-	margin-right: -15px;
-	margin-left: -15px;
 }
 
 .logo {
@@ -40,17 +23,4 @@ main {
 }
 .empty__message {
 	padding: 0 15px;
-}
-
-footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	padding: 20px 0px;
-	text-align: right;
-	z-index: 1;
-}
-.footer__inner {
-	margin: 0 auto;
 }
