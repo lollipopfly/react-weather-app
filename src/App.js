@@ -77,12 +77,17 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<header>
-					<span className="logo">My Places</span>
+				<header className="container">
+					<div className="row">
+						<div className="col-xs-12">
+							<span className="logo">My Places</span>
+							<AddCardBtn />
+						</div>
+					</div>
 				</header>
 
-				<main>
-					<div className="main__inner">
+				<main className="container">
+					<div className="row">
 						{this.props.cards.length > 0 ? (
 							<div className="city__list">{this.props.cards.map((card, i) => <Card key={i} id={i} card={card} />)}</div>
 						) : (
@@ -90,12 +95,6 @@ class App extends Component {
 						)}
 					</div>
 				</main>
-
-				<footer>
-					<div className="footer__inner">
-						<AddCardBtn />
-					</div>
-				</footer>
 
 				<Modal />
 			</div>

@@ -30,7 +30,7 @@ class Card extends React.Component {
 
 	render() {
 		return (
-			<div className="city__list__item">
+			<div className="city__list__item col-md-4 col-xs-6">
 				<div className={"city__list__item__inner " + this.props.card.colorClass}>
 
 					<button className="city__list__item__close" onClick={this.handleClick}></button>

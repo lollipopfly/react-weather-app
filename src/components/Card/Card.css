@@ -1,10 +1,14 @@
 .city__list__item {
-	width: 33.33333333%;
-	float: left;
 	margin-bottom: 20px;
 	padding-left: 15px;
 	padding-right: 15px;
 	box-sizing: border-box;
+	animation: fadeIn 1s;
+}
+@media (max-width: 600px) {
+	.city__list__item {
+		width: 100% !important;
+	}
 }
 .city__list__item__inner {
 	position: relative;
@@ -48,6 +52,11 @@
 	background: none;
 	border: 0;
 }
+@media (max-width: 991px) {
+	.city__list__item__close {
+		opacity: 1;
+	}
+}
 .city__list__item__inner:hover .city__list__item__close {
 	opacity: 1;
 }
@@ -72,21 +81,6 @@
 .city__list__item__close::after {
 	transform: rotate(-45deg);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .city__list__item__top {
 	margin-bottom: 20px;
@@ -141,10 +135,14 @@
 	margin-right: 5px;
 }
 
-
 .city__list__item__time {
 	display: inline-block;
 	width: 50%;
 	text-align: right;
 	vertical-align: bottom;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+		to { opacity: 1; }
 }
