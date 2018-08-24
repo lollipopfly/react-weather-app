@@ -33,7 +33,7 @@
 }
 
 .custom__modal .custom__modal__typeahead.tp-ac__input.error {
-	border: 1px solid red;
+	border: 1px solid #f85b5b;
 }
 
 /* Hack, hide list after modal hidding*/

@@ -17,7 +17,7 @@ class Modal extends React.Component {
 
 		this.onInputChange = this.onInputChange.bind(this);
 		this.hideModal = this.hideModal.bind(this);
-		this.addCity = this.addCity.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidUpdate() {
@@ -47,7 +47,9 @@ class Modal extends React.Component {
 		this.props.onToggleModal();
 	}
 
-	addCity() {
+	handleSubmit(e) {
+		e.preventDefault();
+
 		if (this.state.city) {
 			this.getCityWeather(this.state.city.latitude, this.state.city.longitude);
 		} else {
@@ -101,10 +103,10 @@ class Modal extends React.Component {
 		let input = document.querySelector(".custom__modal__typeahead");
 		let list = document.querySelector(".custom__modal .tp-ac__list");
 
-		setTimeout(function() {
+		this.setState({ city: null }, () => {
 			input.value = "";
 			list.innerHTML = "";
-		}, 20);
+		});
 	}
 
 	throwInputError() {
@@ -122,24 +124,24 @@ class Modal extends React.Component {
 			<Rodal visible={this.props.toggleModal} onClose={this.hideModal} animation="slideDown" className="custom__modal">
 				<div>
 					<h3>Choose location</h3>
-					<div className="custom__modal__typeahead__block">
-						<input
-							type="text"
-							autoFocus="true"
-							onChange={this.onInputChange}
-							ref={c => (this._input = c)}
-							className="custom__modal__typeahead"
-						/>
-					</div>
-
-					<div className="text-center">
-						<div className="custom__modal__btn__block">
-							<button type="button" className="custom__modal__btn" onClick={this.addCity}>
-								Choose
-							</button>
-							<div className="lds-dual-ring"></div>
+					<form onSubmit={this.handleSubmit}>
+						<div className="custom__modal__typeahead__block">
+							<input
+								type="text"
+								autoFocus="true"
+								onChange={this.onInputChange}
+								ref={c => (this._input = c)}
+								className="custom__modal__typeahead"
+							/>
 						</div>
-					</div>
+
+						<div className="text-center">
+							<div className="custom__modal__btn__block">
+								<input type="submit" className="custom__modal__btn" value="Choose" />
+								<div className="lds-dual-ring"></div>
+							</div>
+						</div>
+					</form>
 				</div>
 			</Rodal>
 		);
