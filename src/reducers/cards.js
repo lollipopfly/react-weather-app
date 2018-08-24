@@ -1,26 +1,36 @@
-let storageCards = JSON.parse(localStorage.getItem("cards"));
-
 let initialState = {
-	cards: storageCards ? storageCards : [],
-	isCurrentLocationExists: false,
-};
+	cards: [],
+	currentCardId: null,
+	loading: true,
+}
 
 export default function cards(state = initialState, action) {
 	switch (action.type) {
+		case "FETCH_CARDS":
+			localStorage.setItem("cards", JSON.stringify(action.payload));
+
+			return {
+				...state,
+				cards: action.payload,
+				currentCardId: action.currentLocationId,
+				loading: false,
+			}
+
 		case "ADD_CURRENT_LOCATION_CARD":
 			let cards = JSON.parse(localStorage.getItem("cards"));
 
-			if (!cards) {
+			if (cards.undefined || cards.length === 0) {
 				cards = [];
-				cards.push(action.payload);
 			}
+
+			cards.push(action.payload);
 
 			localStorage.setItem("cards", JSON.stringify(cards));
 
 			return {
 				...state,
-				isCurrentLocationExists: true,
-				cards: [...state.cards, action.payload]
+				cards: [...state.cards, action.payload],
+				currentCardId: action.payload.id
 			};
 		case "ADD_CARD":
 			let cardsList = JSON.parse(localStorage.getItem("cards"));
@@ -37,31 +47,13 @@ export default function cards(state = initialState, action) {
 				cards: [...state.cards, action.payload]
 			};
 		case "REMOVE_CARD":
-			let currentLocationStatus = state.isCurrentLocationExists;
-			let newCards = state.cards.filter((item, key) => {
-				if(key !== action.payload) {
-					return true;
-				} else {
-					// If deleted current location card
-					if(item.isCurrentLocation) {
-						currentLocationStatus = false;
-					}
-
-					return false;
-				}
-			});
+			let newCards = state.cards.filter((item, key) => key !== action.payload);
 
 			localStorage.setItem("cards", JSON.stringify(newCards));
 
 			return {
 				...state,
 				cards: newCards,
-				isCurrentLocationExists: currentLocationStatus
-			}
-		case "CHANGE_CURRENT_LOCATION_EXISTS_STATUS":
-			return {
-				...state,
-				isCurrentLocationExists: action.payload
 			};
 		default:
 			return state;
