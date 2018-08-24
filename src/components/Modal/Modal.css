@@ -72,22 +72,22 @@
 	top: 50%;
 	right: -30px;
 	margin-top: -11px;
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  display: none;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	display: none;
 }
 .lds-dual-ring.active {
 	display: inline-block;
 }
 .lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 15px;
-  height: 15px;
-  margin: 1px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  border-color: #fff transparent #fff transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
+	content: " ";
+	display: block;
+	width: 15px;
+	height: 15px;
+	margin: 1px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+	border-color: #fff transparent #fff transparent;
+	animation: lds-dual-ring 1.2s linear infinite;
 }

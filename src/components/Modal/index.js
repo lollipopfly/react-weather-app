@@ -76,7 +76,7 @@ class Modal extends React.Component {
 				card.isCurrentLocation = false;
 
 				// Save to store
-				self.locationCardAdded(card);
+				self.props.onlocationCardAdded(card);
 
 				// Hide modal
 				this.hideModal();
@@ -84,10 +84,6 @@ class Modal extends React.Component {
 			.catch(error => {
 				preloader.classList.remove("active");
 			});
-	}
-
-	locationCardAdded(card) {
-		this.props.onlocationCardAdded(card);
 	}
 
 	onInputChange(e) {
@@ -138,7 +134,7 @@ class Modal extends React.Component {
 						<div className="text-center">
 							<div className="custom__modal__btn__block">
 								<input type="submit" className="custom__modal__btn" value="Choose" />
-								<div className="lds-dual-ring"></div>
+								<div className="lds-dual-ring" />
 							</div>
 						</div>
 					</form>
@@ -150,8 +146,8 @@ class Modal extends React.Component {
 
 export default connect(
 	state => ({
-		cards: state.cards.cards,
-		toggleModal: state.modal.toggleModal
+		cards: state.cards.items,
+		toggleModal: state.modal.status
 	}),
 	dispatch => ({
 		onToggleModal: () => {

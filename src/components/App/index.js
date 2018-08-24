@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Card from "./components/Card";
-import AddCardBtn from "./components/AddCardBtn";
-import { getCards } from "./actions/cards";
+import Card from "../Card";
+import AddCardBtn from "../AddCardBtn";
+import { getCards } from "../../actions/cards";
 import "./App.css";
 import axios from "axios";
-import Modal from "./components/Modal";
+import Modal from "../Modal";
 
 class App extends Component {
 	constructor(props) {
@@ -14,7 +14,6 @@ class App extends Component {
 		let self = this;
 
 		this.getCurrentLocationWeather = this.getCurrentLocationWeather.bind(this);
-		this.currentLocationCardAdded = this.currentLocationCardAdded.bind(this);
 
 		// Check Geolocation
 		navigator.permissions.query({ name: "geolocation" }).then(function(result) {
@@ -56,13 +55,9 @@ class App extends Component {
 				card.isCurrentLocation = true;
 
 				// Save to store
-				self.currentLocationCardAdded(card);
+				self.props.onCurrentLocationCardAdded(card);
 			})
 			.catch(error => {});
-	}
-
-	currentLocationCardAdded(card) {
-		this.props.onCurrentLocationCardAdded(card);
 	}
 
 	render() {
@@ -86,7 +81,7 @@ class App extends Component {
 						{!this.props.loading && this.props.cards.length === 0 ? (
 							<div className="empty__message">No cities yet.</div>
 						) : null}
-						{this.props.loading ? <div className="lds-dual-ring cards__preloader"></div> : null}
+						{this.props.loading ? <div className="lds-dual-ring cards__preloader" /> : null}
 					</div>
 				</main>
 				<Modal />
@@ -97,7 +92,7 @@ class App extends Component {
 
 export default connect(
 	state => ({
-		cards: state.cards.cards,
+		cards: state.cards.items,
 		loading: state.cards.loading
 	}),
 	dispatch => ({

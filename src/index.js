@@ -5,9 +5,7 @@ import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import reducer from "./reducers/";
-
-import "./index.css";
-import App from "./App";
+import App from "./components/App";
 
 import registerServiceWorker from "./registerServiceWorker";
 
