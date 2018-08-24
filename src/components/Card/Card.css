@@ -36,6 +36,16 @@
 	color: #333;
 }
 
+.city__list__item__current__loc__icon {
+	font-size: 25px;
+	margin-left: 10px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+.city__list__item__inner.fogy .city__list__item__current__loc__icon {
+	color: #333;
+}
+
 /* Close button */
 .city__list__item__close {
 	position: absolute;

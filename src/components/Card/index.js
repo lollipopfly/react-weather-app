@@ -1,5 +1,5 @@
 import * as React from "react";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import tzlookup from "tz-lookup";
 import moment from "moment-timezone";
 
@@ -33,10 +33,14 @@ class Card extends React.Component {
 			<div className="city__list__item col-md-4 col-xs-6">
 				<div className={"city__list__item__inner " + this.props.card.colorClass}>
 
-					<button className="city__list__item__close" onClick={this.handleClick}></button>
+					<button className="city__list__item__close" onClick={this.handleClick} />
 
 					<div className="city__list__item__top">
-						<div className="city__list__item__name">{this.props.card.name}</div>
+						<div className="city__list__item__name">{this.props.card.name}
+							{this.props.card.isCurrentLocation ? (
+								<i className="wi wi-alien city__list__item__current__loc__icon" title="Current location" />
+							) : null}
+						</div>
 						<i className={"city__list__item__icon wi " + this.props.card.icon} />
 					</div>
 
@@ -65,6 +69,6 @@ export default connect(
 	dispatch => ({
 		onRemoveCard: id => {
 			dispatch({ type: "REMOVE_CARD", payload: id });
-		},
+		}
 	})
 )(Card);

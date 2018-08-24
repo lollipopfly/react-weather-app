@@ -61,7 +61,7 @@ class Modal extends React.Component {
 		preloader.classList.add("active");
 
 		axios
-			.get(process.env.REACT_APP_API_URL, {
+			.get(process.env.REACT_APP_API_WEATHER_URL, {
 				params: {
 					lat: lat,
 					lon: lon,
@@ -137,7 +137,7 @@ class Modal extends React.Component {
 							<button type="button" className="custom__modal__btn" onClick={this.addCity}>
 								Choose
 							</button>
-							<div className="lds-dual-ring" />
+							<div className="lds-dual-ring"></div>
 						</div>
 					</div>
 				</div>

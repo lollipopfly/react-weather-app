@@ -2,26 +2,31 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Card from "./components/Card";
 import AddCardBtn from "./components/AddCardBtn";
+import { getCards } from "./actions/cards";
 import "./App.css";
 import axios from "axios";
-import Modal from './components/Modal';
+import Modal from "./components/Modal";
+
 class App extends Component {
 	constructor(props) {
 		super(props);
 
+		let self = this;
+
 		this.getCurrentLocationWeather = this.getCurrentLocationWeather.bind(this);
 		this.currentLocationCardAdded = this.currentLocationCardAdded.bind(this);
-		this.changeCurrentLocationStatus = this.changeCurrentLocationStatus.bind(this);
 
-		// Sync current location status
-		this.changeCurrentLocationStatus();
+		// Check Geolocation
+		navigator.permissions.query({ name: "geolocation" }).then(function(result) {
+			if (result.state === "prompt") {
+				self.getCurrentLocation();
+			}
+		});
+	}
 
-		let isCurrentLocation = this.props.isCurrentLocationExists;
-
-		if (!isCurrentLocation) {
-			// Get location access if current location doesn't exists
-			this.getCurrentLocation();
-		}
+	componentDidMount() {
+		// Fetch data
+		this.props.onGetCards();
 	}
 
 	getCurrentLocation() {
@@ -38,7 +43,7 @@ class App extends Component {
 		let lon = position.coords.longitude;
 
 		axios
-			.get(process.env.REACT_APP_API_URL, {
+			.get(process.env.REACT_APP_API_WEATHER_URL, {
 				params: {
 					lat: lat,
 					lon: lon,
@@ -54,20 +59,6 @@ class App extends Component {
 				self.currentLocationCardAdded(card);
 			})
 			.catch(error => {});
-	}
-
-	changeCurrentLocationStatus() {
-		let status = false;
-		let cards = this.props.cards;
-
-		for (let i in cards) {
-			if (cards[i].isCurrentLocation) {
-				status = true;
-				break;
-			}
-		}
-
-		this.props.onChangeCurrentLocationStatus(status);
 	}
 
 	currentLocationCardAdded(card) {
@@ -90,12 +81,14 @@ class App extends Component {
 					<div className="row">
 						{this.props.cards.length > 0 ? (
 							<div className="city__list">{this.props.cards.map((card, i) => <Card key={i} id={i} card={card} />)}</div>
-						) : (
+						) : null}
+
+						{!this.props.loading && this.props.cards.length === 0 ? (
 							<div className="empty__message">No cities yet.</div>
-						)}
+						) : null}
+						{this.props.loading ? <div className="lds-dual-ring cards__preloader"></div> : null}
 					</div>
 				</main>
-
 				<Modal />
 			</div>
 		);
@@ -105,14 +98,14 @@ class App extends Component {
 export default connect(
 	state => ({
 		cards: state.cards.cards,
-		isCurrentLocationExists: state.cards.isCurrentLocationExists,
+		loading: state.cards.loading
 	}),
 	dispatch => ({
+		onGetCards: () => {
+			dispatch(getCards());
+		},
 		onCurrentLocationCardAdded: card => {
 			dispatch({ type: "ADD_CURRENT_LOCATION_CARD", payload: card });
-		},
-		onChangeCurrentLocationStatus: status => {
-			dispatch({ type: "CHANGE_CURRENT_LOCATION_EXISTS_STATUS", payload: status });
-		},
+		}
 	})
 )(App);
