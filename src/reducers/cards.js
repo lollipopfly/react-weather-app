@@ -1,5 +1,5 @@
 let initialState = {
-	cards: [],
+	items: [],
 	currentCardId: null,
 	loading: true,
 }
@@ -11,7 +11,7 @@ export default function cards(state = initialState, action) {
 
 			return {
 				...state,
-				cards: action.payload,
+				items: action.payload,
 				currentCardId: action.currentLocationId,
 				loading: false,
 			}
@@ -29,7 +29,7 @@ export default function cards(state = initialState, action) {
 
 			return {
 				...state,
-				cards: [...state.cards, action.payload],
+				items: [...state.items, action.payload],
 				currentCardId: action.payload.id
 			};
 		case "ADD_CARD":
@@ -44,16 +44,16 @@ export default function cards(state = initialState, action) {
 
 			return {
 				...state,
-				cards: [...state.cards, action.payload]
+				items: [...state.items, action.payload]
 			};
 		case "REMOVE_CARD":
-			let newCards = state.cards.filter((item, key) => key !== action.payload);
+			let newCards = state.items.filter((item, key) => key !== action.payload);
 
 			localStorage.setItem("cards", JSON.stringify(newCards));
 
 			return {
 				...state,
-				cards: newCards,
+				items: newCards,
 			};
 		default:
 			return state;

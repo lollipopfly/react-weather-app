@@ -1,5 +1,5 @@
 let initialState = {
-	toggleModal: false
+	status: false
 };
 
 export default function modal(state = initialState, action) {
@@ -7,7 +7,7 @@ export default function modal(state = initialState, action) {
 		case "TOGGLE_MODAL":
 			return {
 				...state,
-				toggleModal: !state.toggleModal
+				status: !state.status
 			};
 		default:
 			return state;

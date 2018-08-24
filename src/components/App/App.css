@@ -21,6 +21,7 @@ main {
 	font-size: 25px;
 	font-weight: 700;
 }
+
 .empty__message {
 	padding: 0 15px;
 }
@@ -35,10 +36,10 @@ main {
 }
 
 @keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
